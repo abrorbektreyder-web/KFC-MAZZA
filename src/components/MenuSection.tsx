@@ -18,7 +18,6 @@ export function MenuSection() {
     "prod-fanta-can": 1,
     "prod-pepsi-bottle": 1,
     "prod-fanta-bottle": 1,
-    "prod-pepsi-15l": 1,
   });
   const [addedAnimation, setAddedAnimation] = useState<Record<string, boolean>>({});
 
