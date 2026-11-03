@@ -46,7 +46,7 @@ export function MenuSection() {
   });
 
   return (
-    <section id="menu" className="py-24 bg-[#0B0C0E] relative">
+    <section id="menu" className="py-20 sm:py-24 bg-[#0B0C0E] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -63,10 +63,10 @@ export function MenuSection() {
         </div>
 
         {/* Category Pills Filter — 100% O'zbekcha */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 mb-14">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3.5 mb-12 sm:mb-14">
           <button
             onClick={() => setActiveCategory("all")}
-            className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 active:scale-95 ${
+            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 active:scale-95 ${
               activeCategory === "all"
                 ? "bg-crispy-500 text-white shadow-glow-orange scale-105"
                 : "glass-button text-zinc-300 hover:text-white"
@@ -76,7 +76,7 @@ export function MenuSection() {
           </button>
           <button
             onClick={() => setActiveCategory("sweet")}
-            className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 active:scale-95 ${
+            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 active:scale-95 ${
               activeCategory === "sweet"
                 ? "bg-crispy-500 text-white shadow-glow-orange scale-105"
                 : "glass-button text-zinc-300 hover:text-white"
@@ -86,7 +86,7 @@ export function MenuSection() {
           </button>
           <button
             onClick={() => setActiveCategory("spicy")}
-            className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 active:scale-95 ${
+            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 active:scale-95 ${
               activeCategory === "spicy"
                 ? "bg-spicy-500 text-white shadow-glow-red scale-105"
                 : "glass-button text-zinc-300 hover:text-white"
@@ -97,7 +97,7 @@ export function MenuSection() {
           </button>
           <button
             onClick={() => setActiveCategory("combo")}
-            className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 active:scale-95 ${
+            className={`px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 active:scale-95 ${
               activeCategory === "combo"
                 ? "bg-crispy-500 text-white shadow-glow-orange scale-105"
                 : "glass-button text-zinc-300 hover:text-white"
@@ -107,8 +107,8 @@ export function MenuSection() {
           </button>
         </div>
 
-        {/* Product Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        {/* Product Cards Grid: Mobil (1 col), Planshet (2 col), Kompyuter (4 col) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-8">
           {filteredProducts.map((product) => {
             const currentWeight = weights[product.id] || 1;
             const calculatedPrice = Math.round(currentWeight * product.pricePerKg);
@@ -126,7 +126,7 @@ export function MenuSection() {
                       src={product.imageUrl}
                       alt={product.name}
                       fill
-                      sizes="(max-width: 768px) 100vw, 300px"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
 
