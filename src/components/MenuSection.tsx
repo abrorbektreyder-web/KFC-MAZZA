@@ -16,8 +16,8 @@ export function MenuSection() {
     "prod-sauce-platter": 1,
     "prod-pepsi-can": 1,
     "prod-fanta-can": 1,
-    "prod-pepsi-bottle": 1,
-    "prod-fanta-bottle": 1,
+    "prod-pepsi-1l": 1,
+    "prod-fanta-1l": 1,
   });
   const [addedAnimation, setAddedAnimation] = useState<Record<string, boolean>>({});
 
@@ -160,7 +160,9 @@ export function MenuSection() {
                       alt={product.name}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className={`${
+                        isDona ? "object-contain p-3" : "object-cover"
+                      } group-hover:scale-105 transition-transform duration-500`}
                     />
 
                     {/* Badge */}
