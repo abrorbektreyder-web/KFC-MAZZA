@@ -47,7 +47,7 @@ export function CartDrawer() {
               <div>
                 <h3 className="font-display text-lg font-bold text-white">Sizning Savatchangiz</h3>
                 <p className="text-xs text-zinc-400 font-medium">
-                  Jami vazn: <span className="font-display text-crispy-400 font-bold">{totalWeight} kg</span>
+                  {items.length} xil mahsulot &bull; <span className="font-display text-crispy-400 font-bold">{totalWeight} kg/dona</span>
                 </p>
               </div>
             </div>
@@ -67,7 +67,7 @@ export function CartDrawer() {
               <span className="font-semibold text-ivory-300 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-crispy-400" />
                 {remainingForFree > 0
-                  ? `Yana ${remainingForFree} kg qo'shing va bepul yetkazamiz!`
+                  ? `Yana ${remainingForFree} kg tovuq qo'shing va bepul yetkazamiz!`
                   : "🎉 Tabriklaymiz! Yetkazib berish MUTLAQO BEPUL!"}
               </span>
               <span className="font-bold text-crispy-400">{progressPercent}%</span>
@@ -89,7 +89,7 @@ export function CartDrawer() {
                 </div>
                 <h4 className="font-display text-base font-bold text-white mb-1">Savatchangiz bo'sh</h4>
                 <p className="text-xs text-zinc-400 max-w-xs mb-6 font-normal">
-                  Menyudan o'zingiz yoqtirgan qarsildoq tovuq taomini tanlang va kilogramm bo'yicha buyurtma bering.
+                  Menyudan o'zingiz yoqtirgan qarsildoq tovuq yoki salqin ichimliklarni tanlang va savatchaga qo'shing.
                 </p>
                 <button
                   onClick={closeCart}
@@ -99,60 +99,67 @@ export function CartDrawer() {
                 </button>
               </div>
             ) : (
-              items.map((item) => (
-                <div
-                  key={item.product.id}
-                  className="glass-panel p-3.5 rounded-2xl flex items-center gap-3.5 border border-white/5"
-                >
-                  <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/40 flex-shrink-0">
-                    <Image
-                      src={item.product.imageUrl}
-                      alt={item.product.name}
-                      fill
-                      sizes="64px"
-                      className="object-cover"
-                    />
-                  </div>
+              items.map((item) => {
+                const isDona = item.product.unit === "dona";
+                const step = isDona ? 1 : 0.5;
 
-                  <div className="flex-1 min-w-0">
-                    <h5 className="text-sm font-bold text-white truncate">
-                      {item.product.name}
-                    </h5>
-                    <p className="text-xs text-crispy-400 font-bold mb-2">
-                      {item.totalPrice.toLocaleString()} UZS
-                    </p>
+                return (
+                  <div
+                    key={item.product.id}
+                    className="glass-panel p-3.5 rounded-2xl flex items-center gap-3.5 border border-white/5"
+                  >
+                    <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/40 flex-shrink-0">
+                      <Image
+                        src={item.product.imageUrl}
+                        alt={item.product.name}
+                        fill
+                        sizes="64px"
+                        className="object-cover"
+                      />
+                    </div>
 
-                    {/* Weight controller */}
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center bg-black/60 rounded-lg p-1 border border-white/10">
+                    <div className="flex-1 min-w-0">
+                      <h5 className="text-sm font-bold text-white truncate">
+                        {item.product.name}
+                      </h5>
+                      <p className="text-xs text-crispy-400 font-bold mb-2">
+                        {item.totalPrice.toLocaleString()} UZS
+                      </p>
+
+                      {/* Weight/Quantity controller */}
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center bg-black/60 rounded-lg p-1 border border-white/10">
+                          <button
+                            onClick={() => updateWeight(item.product.id, item.weightKg - step)}
+                            className="w-6 h-6 rounded flex items-center justify-center bg-white/5 hover:bg-white/10 text-white transition-all active:scale-95"
+                            aria-label="Kamaytirish"
+                          >
+                            <Minus className="w-3 h-3" />
+                          </button>
+                          <span className="min-w-14 text-center text-xs font-bold text-white px-1">
+                            {item.weightKg} {isDona ? "dona" : "kg"}
+                          </span>
+                          <button
+                            onClick={() => updateWeight(item.product.id, item.weightKg + step)}
+                            className="w-6 h-6 rounded flex items-center justify-center bg-crispy-500/20 hover:bg-crispy-500 text-crispy-400 hover:text-white transition-all active:scale-95"
+                            aria-label="Oshirish"
+                          >
+                            <Plus className="w-3 h-3" />
+                          </button>
+                        </div>
+
                         <button
-                          onClick={() => updateWeight(item.product.id, item.weightKg - 0.5)}
-                          className="w-6 h-6 rounded flex items-center justify-center bg-white/5 hover:bg-white/10 text-white transition-all"
+                          onClick={() => removeItem(item.product.id)}
+                          className="p-1.5 text-ivory-400 hover:text-spicy-500 transition-colors ml-auto"
+                          aria-label="O'chirish"
                         >
-                          <Minus className="w-3 h-3" />
-                        </button>
-                        <span className="w-12 text-center text-xs font-bold text-white">
-                          {item.weightKg} kg
-                        </span>
-                        <button
-                          onClick={() => updateWeight(item.product.id, item.weightKg + 0.5)}
-                          className="w-6 h-6 rounded flex items-center justify-center bg-crispy-500/20 hover:bg-crispy-500 text-crispy-400 hover:text-white transition-all"
-                        >
-                          <Plus className="w-3 h-3" />
+                          <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
-
-                      <button
-                        onClick={() => removeItem(item.product.id)}
-                        className="p-1.5 text-ivory-400 hover:text-spicy-500 transition-colors ml-auto"
-                        aria-label="O'chirish"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
                     </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
 

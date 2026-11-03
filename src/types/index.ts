@@ -4,6 +4,8 @@ export type ProductItem = {
   name: string;
   description: string;
   pricePerKg: number;
+  unit?: "kg" | "dona";
+  category?: "chicken" | "spicy" | "combo" | "drinks";
   isSpicy: boolean;
   imageUrl: string;
   badge?: string;
